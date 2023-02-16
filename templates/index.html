@@ -1,0 +1,494 @@
+<html xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <link rel="stylesheet" href="main.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+            integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+    <style>
+        body {
+            padding: 0px;
+            margin: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+            color:white;
+        }
+        a:link,a:visited ,a:hover , a:active   {
+            color: white;
+            text-decoration: underline;
+        }
+
+        body, html {
+                  height: 100%;
+                }
+            html, body {
+                padding: 0px;
+                margin: 0px;
+                background: #35363A;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                height: 100%;
+                overflow-x: scroll;
+            }
+
+        .header {
+            background-color: rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: large;
+            color:white;
+
+            text-align: center;
+            padding: 30px;
+            font-size: 25px;
+            font-family: math;
+        }
+        .footer
+        {
+
+        }
+
+        .info
+        {
+            text-align:left;
+            color:gray;
+            width:30%;
+            margin:auto;
+            padding:20px;
+            font-size:14px;
+        }
+
+
+        .content {
+            width: 100%;
+        }
+
+        .upload_part {
+            background-color: rgba(0, 0, 0, 0.3);
+            text-align: center;
+            padding: 40px;
+        }
+
+        .upload_button {
+            background-color: #FEED06;
+            color: black;
+            padding: 15px;
+            font-size: 16px;
+            border: 0px;
+            border-radius: 5px;
+            -webkit-box-shadow: 6px 8px 18px -5px rgba(0, 0, 0, 0.38);
+            -moz-box-shadow: 6px 8px 18px -5px rgba(0, 0, 0, 0.38);
+            box-shadow: 6px 8px 18px -5px rgba(0, 0, 0, 0.38);
+            cursor: pointer;
+        }
+
+        .upload_hint {
+            margin: 10px;
+            font-size: 14px;
+            color: rgb(200, 200, 200);
+        }
+
+        .result_part {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .result_title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .result_id {
+            padding: 10px;
+            margin: 15px;
+            font-size: 16px;
+
+        }
+
+        .result_id_number {
+            margin: 15px;
+            padding: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
+            background-color: #FEED06;
+            color: black;
+            font-weight: bold;
+            font-size: 18px;
+            border-radius: 5px;
+
+        }
+
+
+//css 9/2/2023
+.result_title{
+    font-size: 40px;
+    text-transform: uppercase;
+    font-family:math;
+
+
+}
+#show_fl{
+    padding-top: 25px;
+    font-size: 35px;
+    text-transform: uppercase;
+
+}
+
+
+#flower_infor{
+    padding-top: 0px;
+    padding-bottom: 20px;
+    font-size: 45px;
+
+}
+#flower_des {
+    text-align: justify;
+    padding-bottom: 40px;
+    font-size: 25px;
+
+}
+.result_id li{
+line-height: 1.5;
+text-align: left;
+padding-left: 45.5%;
+font-size: 25px;
+}
+#flower_des {
+
+line-height: 1.3;
+
+}
+#flower_locate_content{
+    line-height: 1.4;
+    padding-top: 30px;
+    padding-bottom: 2%;
+}
+#boc {
+    margin: 0px;
+    display: flex;
+    padding: 40px;
+    background-color:#1A9770;
+}
+#boc2{
+    padding-left: 40px;
+    width: 60%;
+
+}
+#boc1{
+    width: 40%;
+
+}
+#flower_locate_title{
+    padding-top: 40px;
+    font-size: 45px;
+
+}
+#flower_locate_content{
+
+    font-size: 25px;
+    line-height: 1.5;
+
+}
+#flower_locate_content a {
+    float: left;
+    padding-left: 40px;
+
+    text-decoration:none !important;
+}
+#flower_locate{
+    display: none;
+    margin-top:30px ;
+    background-color:1A9770;
+    margin: 2% 2%;
+}
+#display_image{
+    width: 100%;
+    height: 100%;
+    max-width: none !important;
+}
+
+
+
+    </style>
+</head>
+
+<body>
+<div class='header'>
+    FLOWER IDENTIFICATION SYSTEM
+</div>
+<div class='content'>
+
+    <div class='upload_part'>
+        <button class='upload_button' id="upload_button">Select flower image file..</button>
+        <div class='upload_hint' id='upload_hint'>
+            Supported formats: PNG, JPG và JPEG
+        </div>
+        <form action="/" method="POST" enctype="multipart/form-data" id='form'>
+            <input type="file" name="file" id="fileinput" accept="image/*" style="display:none">
+        </form>
+    </div>
+
+    <div class='result_part'>
+        <div class='result_title'><b>Identification results</b></div>
+
+        <div id ="show_fl"></div>
+
+        <div class='result_id' id="result_info">_</div>
+
+        <div id="boc">
+        <div id="boc1"><img style="max-width:300px; border-radius:1rem"
+            src="https://reactnativecode.com/wp-content/uploads/2018/02/Default_Image_Thumbnail.png"
+            alt="User Image" id="display_image"></div>
+        <div id="boc2"><div id="flower_infor">Information about the flower </div>
+        <div id="flower_des"> </div></div>
+        </div>
+
+
+
+
+
+        <div id="flower_locate">
+            <div id="flower_locate_title"></div>
+            <div id="flower_locate_content">
+                <a id ="url1" href="" target="_blank"></a><br>
+                <a id ="url2" href="" target="_blank"></a><br>
+                <a id ="url3" href="" target="_blank"></a><br>
+                <a id ="url4" href="" target="_blank"></a><br>
+                <a id ="url5" href="" target="_blank"></a><br>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class='footer'>
+
+
+</div>
+
+</body>
+<script>
+    const FLOWER_CLASS = {
+        0: 'Daisy',
+        1: 'Dandelion',
+        2: 'Rose',
+        3: 'Sunflower',
+        4: 'Tu-lip'
+    };
+    const fl_infor ={
+        0: 'Daisy are a family of dicotyledonous flowering plants. The scientific name of the family comes from the genus Aster and is derived from the Greek root etymology for the star-shape of the flower in its species, typified by the common name chrysanthemum. The Asteraceae are the first or largest family in the phylum Magnoliophyta, with only the Orchidaceae possibly having greater diversity, with about 25,000 described species. This family by different definitions contains about 900-1,650 genera and 13,000-24,000 species.',
+        1: 'Dandelion is known as a "flying" flower, living around the world, also known as Lion Teeth or in English as Lactuaca Indica. They are considered a small weed, often growing in small clumps and spreading along strips of grass. The height of the dandelion plant is usually in the range of 60 - 300cm. On the stem are long, lance-shaped leaves with serrated edges. Dandelion flowers are about 12 - 15mm in size, located at the top and are milky white or light yellow, in each flower there are usually 20 - 30 small flowers. ',
+        2: 'Roses are upright or climbing shrubs with thorny stems and branches. Leaves compound with odd feathers, leaflets serrated, with accompanying leaves. Fragrant flowers, diverse colors: pink, white, yellow or red... Flowers often have many petals because male stamens turn into. Cup-shaped flower stand. The fruit is held, gathered in the flower base to thicken the fruit. With its outstanding beauty, shape and fragrance, the rose is the most popular and symbolic flower in the West, corresponding in overall to the lotus image in Asia, both of which are close to the symbolism. wheel. In Indian culture, the cosmic rose Triparasundari is used as a representation of the divine mother beauty, signifying a complete and flawless perfection. Besides, the rose symbolizes the reward of life, soul, heart, love, and can be admired as a mandala.',
+        3: 'Sunflower is a flower of the daisy family (Asteraceae), scientific name is Helianthus Annuus. Sunflowers are native to North America. This is a herbaceous plant that lives for about one year, with a large straight stem with stiff hairs, often spotted, 1-3 m high. Leaves are large, often alternate, with long stalks, leaf blade ovate-pointed, heart-shaped below, serrated margins, both sides with white hairs. Inflorescences large, 7-20 cm in diameter, ovate-shaped; Tongue-shaped flowers, outer yellow; The flowers are hermaphroditic in the middle of a pinkish purple color. The plant flowers in winter and spring. ',
+        4: 'Tulips, also known as tulips in English, also known as tulips, tulips, are a genus of flowering plants in the family Liliaceae. Characteristics: The flowers of tulips are often brightly colored, bell- or star-shaped, and extremely symmetrical. All tulips have six petals. The petals may be smooth, fringed, or ruffled. Flowers can be single or double. The most beautiful tulip garden in the world is the Heuhennhof flower garden in the Netherlands'
+    };
+
+
+    //data flower locate
+    const daisy_locate = {
+                add0: {
+                    name: 'Hung Yen Chrysanthemum Garden',
+                    addr: 'https://goo.gl/maps/vFSKFXgMgFt9CAyY6',
+
+                },
+                add1: {
+                    name: 'Ninh Binh Chrysanthemum Garden',
+                    addr: 'https://goo.gl/maps/EjZLKRD8Zn3QJttu6'
+                },
+                add2: {
+                    name: 'Hanoi daisy garden',
+                    addr: 'https://goo.gl/maps/HuvWWEZwonfedazt8'
+                },
+                add3: {
+                    name: 'Dalat Immortal Chrysanthemum Garden',
+                    addr: 'https://goo.gl/maps/GFBeYJaYeSJfa1A99'
+                }
+    };
+    const dandelion_locate = {
+                add0: {
+                    name: 'Da Lat ',
+                    addr: 'https://goo.gl/maps/xAnQp7mj2rVdRqxK9',
+
+
+                },
+
+                add1: {
+                    name: 'Don Duong',
+                    addr: 'https://goo.gl/maps/GgXSNzDCP9wULiAE6',
+
+                },
+
+    };
+    const roses_locate = {
+                add0: {
+                    name: 'Sapa Rose Valley',
+                    addr: 'https://goo.gl/maps/PrAUWZd7SQihbddP8',
+
+                },
+                add1: {
+                    name: 'Tay Giang Rose Farm in Quang Nam',
+                    addr: 'https://goo.gl/maps/NoVd1SjUMwFcA3Jp8',
+
+                },
+                add2: {
+                    name: 'Vu Garden Binh Duong',
+                    addr: 'https://goo.gl/maps/uuqLX4HAsV2oFCaj7',
+
+                },
+
+
+    };
+    const sunflowers_locate = {
+                add0: {
+                    name: 'Hanoi Sunflower Garden',
+                    addr: 'https://goo.gl/maps/ewamDNrRAcqBjigY8',
+
+                },
+                add1: {
+                    name: 'Nghe An sunflower field',
+                    addr: 'https://goo.gl/maps/TVnf4kcqsMk8U1Dq6'
+                },
+                add2: {
+                    name: 'Sapa Sunflower Hill',
+                    addr: 'https://goo.gl/maps/x1UkgHMk7YeWwW4C6'
+                },
+                add3: {
+                    name: 'Sunflower field in Bac Giang',
+                    addr: 'https://goo.gl/maps/bRQtL2sZ8C2GX63a6'
+                },
+                add4: {
+                    name: 'Da Lat sunflower field',
+                    addr: 'https://goo.gl/maps/4jH7gQ7t9CGMf6R58'
+                }
+    };
+    const tulips_locate = {
+                add0: {
+                    name: 'Sun World Ba Na Hill, Da Nang',
+                    addr: 'https://goo.gl/maps/gUX2CDCs24xhDRfn8',
+                },
+                add1: {
+                    name: 'Vinwonder Nha Trang',
+                    addr: 'https://goo.gl/maps/5maABcP3C69LFJkK9',
+
+                },
+                add2: {
+                    name: 'Sun World Ba Den, Tay Ninh',
+                    addr: 'https://goo.gl/maps/7863tswVNtVrUPwYA',
+
+                },
+
+    };
+
+
+
+
+    // Load model
+     $("document").ready (async function() {
+        model = await tf.loadLayersModel('http://127.0.0.1:5000/static/tfjs_model/model.json');
+        console.log('Load model');
+        console.log(model.summary());
+    });
+
+    $("#upload_button").click(function() {
+        $("#fileinput").trigger('click');
+    });
+
+    async function predict() {
+
+    // 1. Chuyen anh ve tensor
+     let image = document.getElementById("display_image");
+     let img = tf.browser.fromPixels(image);
+     let normalizationOffset = tf.scalar(255/2); // 127.5
+     let tensor = img
+            .resizeNearestNeighbor([224, 224])
+            .toFloat()
+            .sub(normalizationOffset)
+            .div(normalizationOffset)
+            .reverse(2)
+            .expandDims();
+
+    // 2. Predict
+    let predictions = await model.predict(tensor);
+    predictions = predictions.dataSync();
+    console.log(predictions);
+
+    // 3. Hien thi len man hinh
+    let top5 = Array.from(predictions)
+        .map(function (p, i) {
+            return {
+                probability: p,
+                className: FLOWER_CLASS[i],
+                infor: fl_infor[i]
+            };
+        }).sort(function (a, b) {
+            return b.probability - a.probability;
+        });
+        console.log(top5);
+        $("#result_info").empty();
+
+        //fl with highest pro
+        var fl_result = top5[0].className;
+        var fl_result_infor = top5[0].infor;
+
+         top5.forEach(function (p) {
+                $("#result_info").append(`<li>${p.className}: ${p.probability.toFixed(3)}</li>`);
+            });
+
+        //show fl with highest pro
+        document.getElementById("show_fl").innerHTML = fl_result;
+        document.getElementById("flower_infor").innerHTML = "Information about " + fl_result;
+        document.getElementById("flower_des").innerHTML ="" + fl_result_infor;
+        document.getElementById("flower_locate").style.display ="block";
+        document.getElementById("flower_locate_title").innerHTML ="Famous flower gardens";
+
+
+        //in data locate
+        if ((fl_result) == FLOWER_CLASS[3])  var r = sunflowers_locate;
+        if ((fl_result) == FLOWER_CLASS[0])  var r = daisy_locate;
+        if ((fl_result) == FLOWER_CLASS[1])  var r = dandelion_locate;
+        if ((fl_result) == FLOWER_CLASS[2])  var r = roses_locate;
+        if ((fl_result) == FLOWER_CLASS[4])  var r = tulips_locate;
+
+        document.getElementById("url1").innerHTML = r.add0.name;
+        document.getElementById("url1").href = r.add0.addr;
+
+        document.getElementById("url2").innerHTML = r.add1.name;
+        document.getElementById("url2").href = r.add1.addr;
+
+        document.getElementById("url3").innerHTML = r.add2.name;
+        document.getElementById("url3").href = r.add2.addr;
+
+        document.getElementById("url4").innerHTML = r.add3.name;
+        document.getElementById("url4").href = r.add3.addr;
+
+        document.getElementById("url5").innerHTML = r.add4.name;
+        document.getElementById("url5").href = r.add4.addr;
+
+        };
+
+
+
+    $("#fileinput").change(function () {
+        let reader = new FileReader();
+        reader.onload = function () {
+            let dataURL = reader.result;
+
+            imEl = document.getElementById("display_image");
+            imEl.onload = function () {
+               predict();
+            }
+            $("#display_image").attr("src", dataURL);
+            $("#result_info").empty();
+
+        }
+
+        let file = $("#fileinput").prop("files")[0];
+        reader.readAsDataURL(file);
+    });
+
+
+</script>
+
+</html>

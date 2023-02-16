@@ -1,0 +1,83 @@
+.result_title{
+    font-size: 40px;
+    text-transform: uppercase;
+    font-family:math;
+
+
+}
+#show_fl{
+    padding-top: 25px;
+    font-size: 35px;
+    text-transform: uppercase;
+
+}
+
+
+#flower_infor{
+    padding-top: 0px;
+    padding-bottom: 20px;
+    font-size: 45px;
+
+}
+#flower_des {
+    text-align: justify;
+    padding-bottom: 40px;
+    font-size: 25px;
+
+}
+.result_id li{
+line-height: 1.5;
+text-align: left;
+padding-left: 45.5%;
+font-size: 25px;
+}
+#flower_des {
+
+line-height: 1.3;
+
+}
+#flower_locate_content{
+    line-height: 1.4;
+    padding-top: 30px;
+}
+#boc {
+    margin: 0px;
+    display: flex;
+    padding: 40px;
+    background-color:#1A9770;
+}
+#boc2{
+    padding-left: 40px;
+    width: 60%;
+
+}
+#boc1{
+    width: 40%;
+
+}
+#flower_locate_title{
+    padding-top: 40px;
+    font-size: 45px;
+
+}
+#flower_locate_content{
+
+    font-size: 25px;
+    line-height: 1.5;
+
+}
+#flower_locate_content a {
+    float: left;
+    padding-left: 40px;
+
+    text-decoration:none !important;
+}
+#flower_locate{
+    margin-top:30px ;
+    background-color:1A9770;
+}
+#display_image{
+    width: 100%;
+    height: 100%;
+    max-width: none !important;
+}
